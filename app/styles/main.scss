@@ -1,0 +1,108 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+@import "compass";
+@import "sass-bootstrap/lib/bootstrap";
+@import "includes/_flash_messages";
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.account {
+  margin-bottom: 5px;
+}
+
+form#registerTodoForm {
+  input {
+    width: 100%;
+  }
+}
+
+.todos {
+  margin: 3em 0;
+
+  .panel-heading {
+    font-size: 2em;
+    font-weight: 100;
+  }
+}
+
+.todo {
+  position: relative;
+
+  .urgent {
+    color: red;
+  }
+
+  .low {
+    color: blue;
+  }
+
+  h4 {
+    font-weight: 700;
+
+    .todo-importance {
+      vertical-align: middle;
+    }
+  }
+
+  .todo-tags {
+    @include clearfix;
+
+    span {
+      float: left;
+      font-size: 1em;
+      margin-right: 3px;
+    }
+  }
+
+  .todo-options {
+    @include transition(opacity 200ms);
+    opacity: 0;
+  }
+
+  @media screen and (min-width: 830px){
+    .todo-create-at {
+      text-align: center;
+      position: absolute;
+      z-index: -1;
+      top: 0px;
+      background: #FF3300;
+      padding: 5px 10px;
+      color: #FFF;
+      left: 0%;
+      @include transition(transform 200ms ease);
+      @include box-shadow(inset -2px 0 2px rgba(black, 0.5));
+
+      span:first-child {
+        display: block;
+        font-size: 2em;
+        line-height: 1;
+      }
+    }
+
+    &:hover {
+      .todo-create-at {
+        @include transform(translateX(-100%));
+      }
+    }
+  }
+
+  &:hover {
+    @include background-image(linear-gradient(bottom, rgba(black, 0.05) 0%, rgba(black, 0) 50%));
+
+    .todo-options {
+      opacity: 1;
+    }
+  }
+
+  &.done {
+    h4 {
+      text-decoration: line-through;
+    }
+
+    h4, p {
+      opacity: 0.5;
+    }
+  }
+}

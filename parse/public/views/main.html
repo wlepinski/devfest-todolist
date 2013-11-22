@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="todos">
+
+      <div class="account">
+        <i class="glyphicon glyphicon-user"></i>
+        <strong>{{loggedUser.username}}</strong>
+        <a href="#/signout">(Sair)</a>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Todos
+        </div>
+        <div class="panel-body">
+          <form ng-submit="addTodo();" name="createForm">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" ng-model="newTodo" class="form-control" placeholder="Lavar roupa" required="">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default" type="button" ng-disabled="createForm.$invalid">Adicionar</button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <ul class="list-group">
+          <li class="list-group-item" ng-show="!todos.$resolved">Carregando items</li>
+
+          <li class="list-group-item todo" ng-class="{ done: todo.done }" ng-repeat="todo in todos" ng-controller="TodoCtrl">
+            <div class="todo-contents" ng-show="!todo.$editing">
+              <div class="todo-options btn-group btn-group-sm pull-right">
+                <button class="btn btn-danger" ng-click="removeTodo(todo);">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </button>
+                <button class="btn btn-default" ng-click="todo.$editing = true">Editar</button>
+              </div>
+              <small class="todo-create-at">
+                <span>{{todo.createdAt | date:'dd'}}</span>
+                <span>{{todo.createdAt | date:'yyyy'}}</span>
+              </small>
+              <input class="todo-done" type="checkbox" ng-model="todo.done" ng-change="editTodo(todo);">
+              <h4>
+                {{todo.title}}
+                <span class="todo-importance">
+                  <i class="urgent glyphicon glyphicon-circle-arrow-up" ng-show="todo.importance == 'urgent'"></i>
+                  <i class="low glyphicon glyphicon-circle-arrow-down" ng-show="todo.importance == 'low'"></i>
+                </span>
+              </h4>
+              <p ng-hide="todo.done">{{todo.description}}</p>
+            </div>
+            <form name="editForm" ng-submit="editTodo(todo);" ng-show="todo.$editing">
+              <div class="form-group">
+                <input type="text" ng-model="todo.title" class="form-control" placeholder="Título">
+              </div>
+              <div class="form-group">
+                <textarea ng-model="todo.description" cols="30" rows="10" class="form-control" placeholder="Descrição">
+                </textarea>
+              </div>
+              <div class="form-group">
+                <select ng-model="todo.importance">
+                  <option value="urgent">Urgente</option>
+                  <option value="">Normal</option>
+                  <option value="low">Baixa</option>
+                </select>
+              </div>
+              <div class="clearfix">
+                <button class="btn pull-right btn-primary" type="submit">Salvar</button>
+                <button class="btn pull-right btn-link" type="button" ng-click="todo.$editing = false">Cancelar</button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
